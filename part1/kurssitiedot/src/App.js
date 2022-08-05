@@ -5,13 +5,17 @@ const Header = (props) => (
 const Content = (props) => (
   <div>
     {props.exerciseList.exercises.map(exercise => (
-      <p key={exercise.name}>{exercise.name} {exercise.num}</p>
+      <Part exercise={exercise} key={exercise.name}/>
     ))}
   </div>
 )
 
 const Total = (props) => (
   <p>Number of exercises {props.exerciseList.exercises.reduce((a, b) => a + b.num, 0)}</p>
+)
+
+const Part = (props) => (
+  <p>{props.exercise.name} {props.exercise.num}</p>
 )
 
 

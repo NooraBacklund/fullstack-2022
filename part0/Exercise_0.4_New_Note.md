@@ -38,4 +38,4 @@ server->browser: Response: HTTP 200 + JSON-formatted data
 
 Image:
 
-![Sequence diagram](Exercise_0.4_ New Note.png)
+![Sequence diagram](Exercise_0.4_New_Note.png)

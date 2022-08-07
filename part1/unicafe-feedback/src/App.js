@@ -19,15 +19,17 @@ const Statistics = ({good, neutral, bad, numResponses}) => {
   return (
     <div>
       <h1>statistics</h1>
-      good {good}<br />
-      neutral {neutral}<br />
-      bad {bad}<br />
-      all {numResponses}<br />
-      average {(good - bad) / (numResponses)}<br />
-      positive {good / numResponses * 100} %<br />
+      <StatisticLine text='good' value={good} />
+      <StatisticLine text='neutral' value={neutral} />
+      <StatisticLine text='bad' value={bad} />
+      <StatisticLine text='all' value={numResponses} />
+      <StatisticLine text='average' value={(good - bad) / (numResponses)} />
+      <StatisticLine text='positive' value={(good / numResponses * 100) + ' %'} />
     </div>
   )
 }
+
+const StatisticLine = ({ text, value }) => (<div>{text} {value} <br /></div>)
 
 const App = () => {
   const [good, setGood] = useState(0)

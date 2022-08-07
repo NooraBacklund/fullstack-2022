@@ -1,6 +1,27 @@
 import { useState } from 'react'
 
-const Button = ({name, clickHandler}) => <button onClick={clickHandler}>{name}</button>
+const Button = ({ name, clickHandler }) => <button onClick={clickHandler}>{name}</button>
+
+const AnecdoteStatistics = ({anecdotes, points}) => {
+  return (
+    <div>
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[points.indexOf(Math.max(...points))]}
+    </div>
+  )
+}
+
+const DailyAnecdote = ({anecdotes, selected, points, randomAnecdote, addVote}) => {
+  return(
+    <div>
+      <h1>Anecdote of the day</h1>
+      {anecdotes[selected]}<br />
+      has {points[selected]} votes <br />
+      <Button name="next anecdote" clickHandler={randomAnecdote} />
+      <Button name="vote" clickHandler={() => addVote(selected)} />
+    </div>
+  )
+}
 
 const App = () => {
   const anecdotes = [
@@ -29,10 +50,8 @@ const App = () => {
 
   return (
     <div>
-      {anecdotes[selected]}<br />
-      has {points[selected]} votes <br />
-      <Button name="next anecdote" clickHandler={randomAnecdote}/>
-      <Button name="vote" clickHandler={() => addVote(selected)} />
+      <DailyAnecdote anecdotes={anecdotes} selected={selected} points={points} randomAnecdote={randomAnecdote} addVote={addVote} />
+      <AnecdoteStatistics anecdotes={anecdotes} points={points}/>
     </div>
   )
 }

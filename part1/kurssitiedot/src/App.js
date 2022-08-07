@@ -1,17 +1,17 @@
 const Header = (props) => (
-  <h1>{props.course}</h1>
+  <h1>{props.course.name}</h1>
 )
 
 const Content = (props) => (
   <div>
-    {props.exerciseList.exercises.map(exercise => (
+    {props.course.parts.map(exercise => (
       <Part exercise={exercise} key={exercise.name}/>
     ))}
   </div>
 )
 
 const Total = (props) => (
-  <p>Number of exercises {props.exerciseList.exercises.reduce((a, b) => a + b.num, 0)}</p>
+  <p>Number of exercises {props.course.parts.reduce((a, b) => a + b.num, 0)}</p>
 )
 
 const Part = (props) => (
@@ -20,11 +20,10 @@ const Part = (props) => (
 
 
 const App = () => {
-  const course = 'Half Stack application development'
-
   // Turning the data to be passed into an object to be passed in a single variable
-  const exerciseList = {
-    exercises: [{
+  const course = {
+    name: 'Half Stack application development',
+    parts: [{
       name: 'Fundamentals of React',
       num: 10
     },
@@ -41,8 +40,8 @@ const App = () => {
   return (
     <div>
       <Header course={course} />
-      <Content exerciseList={exerciseList} />
-      <Total exerciseList={exerciseList} />
+      <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }

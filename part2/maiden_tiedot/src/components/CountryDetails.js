@@ -1,15 +1,14 @@
 const CountryDetails = ({countryDetails}) => {
-    const data = countryDetails[0]
     return (
         <div>
-            <h2>{data.name.common}</h2>
-            capital {data.capital}<br />
-            area {data.area}
+            <h2>{countryDetails.name.common}</h2>
+            capital {countryDetails.capital}<br />
+            area {countryDetails.area}
             <h3>languages</h3>
             <ul>
-                {Object.values(data.languages).map(l => <li key={l}>{l}</li>)}
+                {Object.values(countryDetails.languages).map(l => <li key={l}>{l}</li>)}
             </ul>
-            <img src={data.flags.png} />
+            <img src={countryDetails.flags.png} />
         </div>
     )
 }

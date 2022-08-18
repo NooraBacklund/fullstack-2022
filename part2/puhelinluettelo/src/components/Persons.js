@@ -3,14 +3,16 @@ import personService from '../services/persons'
 const Person = ({ person, setPersons, persons }) => {
 
     const handlePersonDelete = (event) => {
-        personService
-            .deletePerson(event.target.value)
-            .then((response) => {
-                setPersons(persons.filter(p => p.id != event.target.value))
-            })
-            .catch(error => {
-                console.log('Could not find person to be deleted')
-            })
+        if (window.confirm(`Are you sure you want to delete the entry?`)) {
+            personService
+                .deletePerson(event.target.value)
+                .then((response) => {
+                    setPersons(persons.filter(p => p.id != event.target.value))
+                })
+                .catch(error => {
+                    console.log('Could not find person to be deleted')
+                })
+        }
     }
 
     return (

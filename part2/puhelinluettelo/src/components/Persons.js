@@ -1,6 +1,6 @@
 import personService from '../services/persons'
 
-const Person = ({ person, setPersons, persons }) => {
+const Person = ({ person, setPersons, persons, showMessage }) => {
 
     const handlePersonDelete = (event) => {
         if (window.confirm(`Are you sure you want to delete the entry?`)) {
@@ -8,6 +8,7 @@ const Person = ({ person, setPersons, persons }) => {
                 .deletePerson(event.target.value)
                 .then((response) => {
                     setPersons(persons.filter(p => p.id != event.target.value))
+                    showMessage(`Person deleted from phonebook.`, 'success')
                 })
                 .catch(error => {
                     console.log('Could not find person to be deleted')
@@ -22,7 +23,7 @@ const Person = ({ person, setPersons, persons }) => {
     )
 }
 
-const Persons = ({ persons, filter, setPersons }) => {
+const Persons = ({ persons, filter, setPersons, showMessage }) => {
 
     // Filter persons to be displayed
     const displayPersons = filter === ''
@@ -33,7 +34,13 @@ const Persons = ({ persons, filter, setPersons }) => {
     return (
         <div>
             {displayPersons.map(
-                person => <Person person={person} setPersons={setPersons} persons={persons} key={person.name} />
+                person => 
+                <Person 
+                person={person} 
+                setPersons={setPersons} 
+                persons={persons} 
+                showMessage={showMessage}
+                key={person.name} />
             )}
         </div>
     )

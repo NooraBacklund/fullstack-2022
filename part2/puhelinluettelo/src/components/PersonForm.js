@@ -11,7 +11,8 @@ const PersonForm = ({ persons, setPersons }) => {
 
     const addPerson = (event) => {
         event.preventDefault()
-        const newPerson = {
+        // Note use of "let" instead of "const", to allow for enrichment with id if this is an existing person
+        let newPerson = {
             name: newName,
             number: newNumber
         }
@@ -19,7 +20,17 @@ const PersonForm = ({ persons, setPersons }) => {
         // Check if person already exists, only add new persons
         if (persons.map(person => person.name).includes(newName)) {
             // Alert of duplicate, do not add person
-            alert(`${newName} is already added to phone book`)
+            if (window.confirm(`${newName} is already added to phone book, replace the old number with a new one?`)) {
+                // Get person ID
+                const id = persons.filter(p => p.name === newName)[0].id
+                // Replace number
+                newPerson = { ...newPerson, id: id }
+                personService
+                    .updatePerson(newPerson)
+                    .then(response => {
+                        setPersons(persons.map(p => p.id !== newPerson.id ? p : response.data))
+                    })
+            }
         } else {
             // Add person to phonebook
             personService

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios'
 
 const PersonForm = ({ persons, setPersons }) => {
 
@@ -14,15 +15,20 @@ const PersonForm = ({ persons, setPersons }) => {
             name: newName,
             number: newNumber
         }
+
         // Check if person already exists, only add new persons
         if (persons.map(person => person.name).includes(newName)) {
             // Alert of duplicate, do not add person
             alert(`${newName} is already added to phone book`)
         } else {
             // Add person to phonebook
-            setPersons(persons.concat(newPerson))
-            setNewName('')
-            setNewNumber('')
+            axios
+                .post('http://localhost:3001/persons', newPerson)
+                .then(response => {
+                    setPersons(persons.concat(response.data))
+                    setNewName('')
+                    setNewNumber('')
+                })
         }
     }
 

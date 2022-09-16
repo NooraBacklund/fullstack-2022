@@ -1,0 +1,27 @@
+{
+  "name": "phonebook_backend",
+  "version": "1.0.0",
+  "description": "Helsinki University Fullstack 2022 course",
+  "main": "phonebook_backend/index.js",
+  "scripts": {
+    "start": "node phonebook_backend/index.js",
+    "dev": "nodemon phonebook_backend/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NooraBacklund/fullstack-2022.git"
+  },
+  "author": "Noora Backlund",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NooraBacklund/fullstack-2022/issues"
+  },
+  "homepage": "https://github.com/NooraBacklund/fullstack-2022#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

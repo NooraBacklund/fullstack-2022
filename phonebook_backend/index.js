@@ -1,7 +1,10 @@
+const { response } = require('express');
 const express = require('express');
 const app = express();
 
-let notes = [
+app.use(express.json())
+
+let persons = [
     {
         id: 1,
         name: "Arto Hellas", 
@@ -30,28 +33,48 @@ app.get('/', (req, res) => {
 
 app.get('/info', (req, res) => {
     const response = 
-        `<p>Phonebook has info for ${notes.length} people</p> \
+        `<p>Phonebook has info for ${persons.length} people</p> \
         <p>${new Date().toString()}</p>`
     res.send(response)
 })
 
-app.get('/api/notes', (req, res) => {
-    res.json(notes)
+app.get('/api/persons', (req, res) => {
+    res.json(persons)
 })
 
-app.get('/api/notes/:id', (req, res) => {
+app.post('/api/persons', (req, res) => {
+    // Verify that data contains correct info
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            error: "Content missing"
+        })
+    }
+
+    const person = {
+        id: Math.floor(Math.random() * 1000000),
+        name: body.name,
+        number: body.number
+    }
+    
+    persons = persons.concat(person)
+
+    res.json(person)
+})
+
+app.get('/api/persons/:id', (req, res) => {
     const id = Number(req.params.id)
-    const note = notes.find(note => note.id === id)
-    if (note) {
-        res.json(note)
+    const person = persons.find(person => person.id === id)
+    if (person) {
+        res.json(person)
     } else {
         res.status(404).end()
     }
 })
 
-app.delete('/api/notes/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res) => {
     const id = Number(req.params.id)
-    notes = notes.filter(note => note.id !== id)
+    persons = persons.filter(person => person.id !== id)
 
     res.status(204).end()
 })

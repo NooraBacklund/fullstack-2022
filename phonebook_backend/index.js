@@ -43,13 +43,27 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-    // Verify that data contains correct info
     const body = req.body;
+
+    // Content missing
     if (!body) {
         return res.status(400).json({
             error: "Content missing"
         })
     }
+
+    // Check for correct variables and no duplicate persons
+    let errorList = []
+    if (!body.name || body.name === "") {
+        errorList = errorList.concat({error: "Name missing"});
+    }
+    if (!body.number || body.number === "") {
+        errorList = errorList.concat({error: "Number missing"});
+    }
+    if (persons.find(person => person.name === body.name)) {
+        errorList = errorList.concat({error: "Name must be unique"})
+    }
+    if (errorList.length) return res.status(400).json(errorList);
 
     const person = {
         id: Math.floor(Math.random() * 1000000),
